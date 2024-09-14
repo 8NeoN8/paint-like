@@ -14,8 +14,41 @@
   align-items: center;
 }
 
-.paintin-canvas{
-  border: 1px solid red;
-  cursor: pointer;
+.content-container{
+  width: 100%;
+  height: 100%;
 }
 
+.paintin-canvas{
+  border: 1px solid red;
+}
+
+.navbar{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: teal;
+  height: 3.5rem;
+  gap: 1rem;
+  aspect-ratio:initial;
+}
+
+.sidebar{
+  background-color: blue;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+}
+
+.navbar-list{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul{
+  list-style: none;
+  gap: 0.5rem;
+}
