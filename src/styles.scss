@@ -35,17 +35,40 @@
   aspect-ratio:initial;
 }
 
-.sidebar{
-  background-color: blue;
-  display: flex;
-  align-items: center;
-  height: 100vh;
-}
-
 .navbar-list{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.color-picker-widget{
+  
+}
+
+.open-close-container{
+  background-color: antiquewhite;
+  padding: 0.3rem;
+  width: 100%;
+  min-width: 17.25rem;
+  display: flex;
+  text-align: right;
+  justify-content: space-between;
+  align-items: center;
+  vertical-align: middle;
+  gap: 2rem;
+  cursor: move;
+  z-index: 3;
+}
+.open-close-button{
+  width: 1.5rem;
+  height: 1.5rem;
+  line-height: 0;
+  font-size: 1.5rem;
+  font-weight: bolder;
+}
+
+.hidden{
+  display: none;
 }
 
 ul{

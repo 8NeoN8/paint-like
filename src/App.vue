@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <main class="content-container">
+    <main class="content-container" v-if="true">
       <div class="navbar">
         <div class="save-image navbar-button">Save</div>
         <div class="open-image navbar-button">Open</div>
@@ -23,27 +23,44 @@
       </canvas>
     </main>
 
-    <aside class="sidebar">
-      <div class="color-picker sidebar-option">
-        <input type="color" name="color-picker-sidebar" id="color-picker-sidebar" v-model="color" @mouseover="test($event)">
-      </div>
-    </aside>
+    <DraggableDiv class="color-picker-widget">
+      <template v-slot:header>
+        <div class="open-close-container">
+          Color Picker
+          <button class="open-close-button" @click="openCloseColor()">{{ pickerState }}</button>
+        </div>
+      </template>
+      <template v-slot:main >
+        <div id="picker-container">
+          <color-picker class="color-picker" id="color-picker" isWidget pickerType="chrome" lang="En"  @update:pureColor="setColor($event)"></color-picker>
+        </div>
+      </template>
+    </DraggableDiv>
+
   </div>
 </template>
 
 <script>
+import Vue3ColorPicker from "vue3-colorpicker";
+import DraggableDiv from './components/draggableDiv.vue'
 export default {
   data() {
     return {
+      vaina: true,
       canvas: null,
       ctx: null,
-      canvasSizeX: 1580,
-      canvasSizeY: 880,
+      canvasSizeX: 800,
+      canvasSizeY: 800,
       isDrawing: false,
       brushSize: 5,
       mousePos: [0,0],
-      color: '#ff0000'
+      color: '#ff0000',
+      pickerState: '-'
     }
+  },
+  components:{
+    Vue3ColorPicker,
+    DraggableDiv,
   },
   computed: {
     
@@ -60,10 +77,23 @@ export default {
   },
   methods: {
     test(event){
-      console.log(event.target.value);
+      console.log(event);
+    },
+    setColor(color){
+      this.color = color
+    },
+    openCloseColor(){
+      let picker = document.getElementById('picker-container')
+      console.log(picker);
+      if(picker.classList.contains('hidden')){
+        picker.classList.remove('hidden')
+        this.pickerState = '-'
+      }else{
+        picker.classList.add('hidden')
+        this.pickerState = '+'
+      }
     },
     setClickDown(event){
-      console.log('click');
       this.isDrawing = true
       this.draw(this.mousePos)
     },
@@ -78,8 +108,8 @@ export default {
     },
     draw(event){
       this.ctx.lineWidth = this.brushSize
-      this.ctx.strokeStyle = 'red'
-      this.ctx.fillStyle = 'red'
+      this.ctx.strokeStyle = this.color
+      this.ctx.fillStyle = this.color
       this.ctx.lineCap = 'round'
       this.ctx.lineJoin = 'round'
       this.ctx.lineTo(event.clientX - this.canvas.offsetLeft, event.clientY - this.canvas.offsetTop)
@@ -93,8 +123,8 @@ export default {
     },
     penMode(){
       this.ctx.globalCompositeOperation = 'source-over';
-      this.ctx.strokeStyle = 'red';
-    }
+      this.ctx.strokeStyle = this.color;
+    },
   },
 }
 </script>
