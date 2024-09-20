@@ -12,6 +12,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .content-container{
@@ -21,28 +22,93 @@
 
 .paintin-canvas{
   border: 1px solid red;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .navbar{
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   padding: 0.5rem;
-  background-color: teal;
   height: 3.5rem;
   gap: 1rem;
   aspect-ratio:initial;
+  background-color:antiquewhite ;
+  z-index: 2;
+}
+
+.navbar-button{
+  cursor: pointer;
+  //background-color: lime;
 }
 
 .navbar-list{
   display: flex;
   justify-content: center;
   align-items: center;
+  //background-color: blue;
+  padding: 0.2rem;
+}
+
+.type-brush, .shape-brush{
+  font-weight: bold;
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  border-radius: 5px;
+  border: 2px solid rgb(234, 219, 200);
+
+  &:hover{
+    background-color: rgb(234, 219, 200);;
+  }
+}
+
+.brush-sizes{
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid rgb(234, 219, 200);
+}
+
+.brush-size-number-input{
+  width: 2rem;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid rgb(234, 219, 200);
+  border-radius: 8px;
+  text-align: center;
+
+  &:hover{
+    outline: none;
+  }
+}
+
+.brush-size-range-input{
+  width: 5rem !important;
+  &:hover{
+    z-index: 20;
+  }
+}
+
+.pen-cursor{
+  min-width: 4px;
+  min-height: 4px;
+  border-radius: 50%;
+  border: 1px solid black;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  pointer-events: none;
+  
 }
 
 .color-picker-widget{
-  
+  left: 50%;
+  top: 5rem
 }
 
 .open-close-container{

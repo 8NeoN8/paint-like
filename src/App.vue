@@ -1,21 +1,23 @@
 <template>
   <div class="main-container">
-    <main class="content-container" v-if="true">
+    <main id="content-container" class="content-container" v-if="true">
       <div class="navbar">
-        <div class="save-image navbar-button">Save</div>
-        <div class="open-image navbar-button">Open</div>
+        <div class="options navbar-list">
+          <div class="save-image navbar-button">Save</div>
+          <div class="open-image navbar-button">Open</div>
+        </div>
         <div class="brush-sizes navbar-list">
-          <input type="number" name="brush-size-number-input" id="brush-size-number-input" v-model="brushSize" step="1" min="2" max="100">
-          <input type="range" name="brush-size-range-input" id="brush-size-range-input" v-model="brushSize" step="1" min="2" max="100">
+          <input type="number" name="brush-size-number-input" class="brush-size-number-input" id="brush-size-number-input" v-model="brushSize" step="1" min="2" max="100">
+          <input type="range" name="brush-size-range-input" class="brush-size-range-input" id="brush-size-range-input" v-model="brushSize" step="1" min="2" max="100">
         </div>
         <ul class="brush-types navbar-list">
-          <li class="type-brush navbar-button">Pen</li>
-          <li class="type-brush navbar-button">Eraser</li>
+          <li class="type-brush navbar-button" @click="penMode()">&#9998;</li>
+          <li class="type-brush navbar-button" @click="eraserMode()">&#10001;</li>
         </ul>
         <ul class="brush-shapes navbar-list">
-          <li class="shape-brush">Circle</li>
-          <li class="shape-brush">Triangle</li>
-          <li class="shape-brush">Square</li>
+          <li class="shape-brush navbar-button">&#9679;</li>
+          <li class="shape-brush navbar-button">&#9650;</li>
+          <li class="shape-brush navbar-button">&#9724;</li>
         </ul>
       </div>
   
@@ -37,6 +39,7 @@
       </template>
     </DraggableDiv>
 
+    <div id="pen-cursor" class="pen-cursor"></div>
   </div>
 </template>
 
@@ -55,7 +58,8 @@ export default {
       brushSize: 5,
       mousePos: [0,0],
       color: '#ff0000',
-      pickerState: '-'
+      pickerState: '-',
+      penCursor: null,
     }
   },
   components:{
@@ -71,9 +75,19 @@ export default {
   mounted() {
     this.canvas = document.getElementById('paintin-canvas')
     this.ctx = this.canvas.getContext('2d')
-    this.canvas.height = this.canvasSizeY
-    this.canvas.width = this.canvasSizeX
+    this.canvas.height = window.innerHeight - 5
+    this.canvas.width = window.innerWidth - 5
     this.penMode()
+
+    let mainContainer = document.getElementById('content-container')
+    let penCursor = document.getElementById('pen-cursor')
+
+    this.penCursor = penCursor
+    mainContainer.addEventListener('mousemove', (e) => {
+      penCursor.setAttribute('style', `top: ${e.clientY-(this.brushSize/2)}px; left:${e.clientX-(this.brushSize/2)}px; width: ${this.brushSize}px; height:${this.brushSize}px;`)
+    })
+  },
+  watch:{
   },
   methods: {
     test(event){
